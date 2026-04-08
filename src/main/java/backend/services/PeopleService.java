@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class PeopleService {
     HttpClient starWarsClient;
     String baseUrl;
+    ArrayList<Person> results = new ArrayList<>();
+
 
     public PeopleService(HttpClient starWarsClient, String baseUrl) {
         this.starWarsClient = starWarsClient;
@@ -18,7 +20,9 @@ public class PeopleService {
     }
 
     public ArrayList<Person> getPeople() {
-        ArrayList<Person> results = new ArrayList<>();
+        if (results.size() != 0) return results;
+
+        results = new ArrayList<>();
         People result;
         String nextURL = "";
         try {
