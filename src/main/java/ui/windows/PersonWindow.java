@@ -8,15 +8,15 @@ import ui.UIController;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllPeopleWindow extends BasicWindow {
+public class PersonWindow extends BasicWindow {
 
     private final UIController ui;
-    private final PeopleService service;
+    private final Person person;
 
-    public AllPeopleWindow(UIController ui, PeopleService service) {
-        super("All People");
+    public PersonWindow(UIController ui, Person person) {
+        super(person.name());
         this.ui = ui;
-        this.service = service;
+        this.person = person;
         setHints(List.of(Hint.CENTERED));
         setComponent(build());
     }
@@ -29,15 +29,10 @@ public class AllPeopleWindow extends BasicWindow {
         ActionListBox alb = new ActionListBox();
         panel.addComponent(alb);
 
-        ArrayList<Person> people = service.getPeople();
-        int id;
-        for (Person person : people) {
-            int i = person.url().indexOf("people/") + "people/".length();
-            id = Integer.valueOf(person.url().substring(i, person.url().length() - 1));
-            alb.addItem("(" + id + ")" + person.name(),
-                    () -> {ui.showPersonWindow(person);
-            });
-        }
+        alb.addItem("Name: " + person.name(), () -> {});
+        alb.addItem("Home world " + person.homeworld(), () -> {});
+        alb.addItem("Birth year: " + person.birthYear(), () -> {});
+
         panel.addComponent(new Button("Back", () -> ui.closeWindow(this)));
 
         return panel;

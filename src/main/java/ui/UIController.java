@@ -2,8 +2,10 @@ package ui;
 
 import backend.services.PeopleService;
 import com.googlecode.lanterna.gui2.Window;
+import models.Person;
 import ui.windows.AllPeopleWindow;
 import ui.windows.MainWindow;
+import ui.windows.PersonWindow;
 
 /*
 Handles navigation
@@ -24,6 +26,10 @@ public class UIController {
 
     public void showAllPeopleWindow() {
         gui.show(new AllPeopleWindow(this, peopleService));
+    }
+
+    public void showPersonWindow(Person person){
+        gui.show(new PersonWindow(this, person));
     }
 
     public void closeWindow(Window window) {
