@@ -1,5 +1,6 @@
 import backend.HttpClient;
 import backend.services.PeopleService;
+import backend.services.PlanetService;
 import ui.Gui;
 import ui.UIController;
 
@@ -16,14 +17,15 @@ public class App {
     public static void run() {
         try {
             // HttpClients
-            HttpClient starWarsClient = new HttpClient("https://swapi.dev/api/");
+            HttpClient starWarsClient = new HttpClient("https://swapi.info/api/");
 
             // Services
             PeopleService peopleService = new PeopleService(starWarsClient, "people/");
+            PlanetService planetService = new PlanetService(starWarsClient, "planets/");
             // GUI
             Gui gui = new Gui();
             gui.start();
-            UIController ui = new UIController(gui, peopleService);
+            UIController ui = new UIController(gui, peopleService, planetService);
             ui.showMainMenu();
 
         } catch (

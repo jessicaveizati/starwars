@@ -1,10 +1,11 @@
 package ui.windows;
 
 import backend.services.PeopleService;
+import backend.services.PlanetService;
 import com.googlecode.lanterna.gui2.*;
 import models.Person;
+import models.Planet;
 import ui.UIController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,13 @@ public class PersonWindow extends BasicWindow {
 
     private final UIController ui;
     private final Person person;
+    private final PlanetService service;
 
-    public PersonWindow(UIController ui, Person person) {
+    public PersonWindow(UIController ui, Person person, PlanetService service) {
         super(person.name());
         this.ui = ui;
         this.person = person;
+        this.service = service;
         setHints(List.of(Hint.CENTERED));
         setComponent(build());
     }
@@ -29,8 +32,14 @@ public class PersonWindow extends BasicWindow {
         ActionListBox alb = new ActionListBox();
         panel.addComponent(alb);
 
+        //Gets the planet for the person using the URL
+        Planet planet = service.getPlanet(person.homeworld());
+
         alb.addItem("Name: " + person.name(), () -> {});
-        alb.addItem("Home world " + person.homeworld(), () -> {});
+        alb.addItem("Home world " + planet.name(), () -> {
+            PlanetWindow planetWindow = new PlanetWindow(ui, planet, service);
+            ui.showPlanetWindow(planet);
+        });
         alb.addItem("Birth year: " + person.birthYear(), () -> {});
 
         panel.addComponent(new Button("Back", () -> ui.closeWindow(this)));

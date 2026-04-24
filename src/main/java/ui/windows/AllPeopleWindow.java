@@ -13,6 +13,7 @@ public class AllPeopleWindow extends BasicWindow {
     private final UIController ui;
     private final PeopleService service;
 
+    //Constructor
     public AllPeopleWindow(UIController ui, PeopleService service) {
         super("All People");
         this.ui = ui;
@@ -33,7 +34,8 @@ public class AllPeopleWindow extends BasicWindow {
         int id;
         for (Person person : people) {
             int i = person.url().indexOf("people/") + "people/".length();
-            id = Integer.valueOf(person.url().substring(i, person.url().length() - 1));
+            String idString = person.url().substring(i, person.url().length());
+            id = Integer.valueOf(idString);
             alb.addItem("(" + id + ")" + person.name(),
                     () -> {ui.showPersonWindow(person);
             });

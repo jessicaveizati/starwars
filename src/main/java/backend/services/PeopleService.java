@@ -7,6 +7,7 @@ import models.Person;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PeopleService {
     HttpClient starWarsClient;
@@ -22,16 +23,11 @@ public class PeopleService {
     public ArrayList<Person> getPeople() {
         if (results.size() != 0) return results;
 
-        results = new ArrayList<>();
-        People result;
+        Person[] result;
         String nextURL = "";
         try {
-            while (true) {
-                result = starWarsClient.getOne(baseUrl + nextURL, People.class);
-                results.addAll(result.results());
-                if (result.next() == null) break;
-                nextURL = result.next().substring(result.next().indexOf("?"));
-            }
+            result = starWarsClient.getOne(baseUrl, Person[].class);
+            results = new ArrayList<>(Arrays.asList(result));
             return results;
         } catch (IOException e) {
             throw new RuntimeException(e);
