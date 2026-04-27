@@ -21,7 +21,7 @@ public class PlanetService {
         this.baseUrl = Helpers.normalizeBaseURL(baseUrl);
     }
 
-    public Planet getPlanet(int planetID){
+    public Planet getPlanet(int planetID) {
         return getPlanet(starWarsClient.baseURI + baseUrl + planetID);
     }
 
@@ -29,19 +29,10 @@ public class PlanetService {
         Planet result;
         try {
             result = starWarsClient.getOne(new URI(fullURL), Planet.class);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return result;
     }
 
-    public Film getFilm(String fullURL){
-        Film result;
-        try {
-            result = starWarsClient.getOne(new URI(fullURL), Film.class);
-            } catch(Exception e) {
-                throw new RuntimeException(e);
-            }
-            return result;
-        }
 }

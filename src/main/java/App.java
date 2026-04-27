@@ -1,6 +1,8 @@
 import backend.HttpClient;
+import backend.services.FilmsService;
 import backend.services.PeopleService;
 import backend.services.PlanetService;
+import models.Films;
 import ui.Gui;
 import ui.UIController;
 
@@ -22,10 +24,11 @@ public class App {
             // Services
             PeopleService peopleService = new PeopleService(starWarsClient, "people/");
             PlanetService planetService = new PlanetService(starWarsClient, "planets/");
+            FilmsService filmsService = new FilmsService(starWarsClient, "films/");
             // GUI
             Gui gui = new Gui();
             gui.start();
-            UIController ui = new UIController(gui, peopleService, planetService);
+            UIController ui = new UIController(gui, peopleService, planetService, filmsService);
             ui.showMainMenu();
 
         } catch (

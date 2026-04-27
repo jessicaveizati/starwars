@@ -1,5 +1,6 @@
 package ui;
 
+import backend.services.FilmsService;
 import backend.services.PeopleService;
 import backend.services.PlanetService;
 import com.googlecode.lanterna.gui2.Window;
@@ -18,11 +19,13 @@ public class UIController {
     private final Gui gui;
     private final PeopleService peopleService;
     private final PlanetService planetService;
+    private final FilmsService filmsService;
 
-    public UIController(Gui gui, PeopleService peopleService, PlanetService planetService) {
+    public UIController(Gui gui, PeopleService peopleService, PlanetService planetService, FilmsService filmsService) {
         this.gui = gui;
         this.peopleService = peopleService;
         this.planetService = planetService;
+        this.filmsService = filmsService;
     }
 
     public void showMainMenu() {
@@ -34,11 +37,11 @@ public class UIController {
     }
 
     public void showPersonWindow(Person person){
-        gui.show(new PersonWindow(this, person, planetService));
+        gui.show(new PersonWindow(this, person, planetService, filmsService));
     }
 
     public void showPlanetWindow(Planet planet){
-        gui.show(new PlanetWindow(this, planet, planetService));
+        gui.show(new PlanetWindow(this, planet, planetService, filmsService));
     }
 
 

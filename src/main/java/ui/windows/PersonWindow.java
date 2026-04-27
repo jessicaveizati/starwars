@@ -1,5 +1,6 @@
 package ui.windows;
 
+import backend.services.FilmsService;
 import backend.services.PeopleService;
 import backend.services.PlanetService;
 import com.googlecode.lanterna.gui2.*;
@@ -14,12 +15,14 @@ public class PersonWindow extends BasicWindow {
     private final UIController ui;
     private final Person person;
     private final PlanetService service;
+    private final FilmsService filmsService;
 
-    public PersonWindow(UIController ui, Person person, PlanetService service) {
+    public PersonWindow(UIController ui, Person person, PlanetService service, FilmsService filmsService) {
         super(person.name());
         this.ui = ui;
         this.person = person;
         this.service = service;
+        this.filmsService = filmsService;
         setHints(List.of(Hint.CENTERED));
         setComponent(build());
     }
@@ -36,8 +39,8 @@ public class PersonWindow extends BasicWindow {
         Planet planet = service.getPlanet(person.homeworld());
 
         alb.addItem("Name: " + person.name(), () -> {});
-        alb.addItem("Home world " + planet.name(), () -> {
-            PlanetWindow planetWindow = new PlanetWindow(ui, planet, service);
+        alb.addItem("Home world: " + planet.name(), () -> {
+            PlanetWindow planetWindow = new PlanetWindow(ui, planet, service, filmsService);
             ui.showPlanetWindow(planet);
         });
         alb.addItem("Birth year: " + person.birthYear(), () -> {});
